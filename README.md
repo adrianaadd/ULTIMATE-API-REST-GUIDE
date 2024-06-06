@@ -87,9 +87,9 @@ Ahora creamos nuestro archivo principal y que será la entrada a nuestra API por
 touch index.js
 ```
 
-Ahora entramos a nuestra carpeta ```api``` con el comando ```cd api``` y ahora creamos tres carpetas con los siguientes nombres por medio de la terminal:
+Ahora entramos a nuestra carpeta ```api``` con el comando ```cd api``` y creamos tres carpetas con los siguientes nombres por medio de la terminal:
 
-```bash
+```js
 mkdir controllers models routes
 ```
 
