@@ -68,7 +68,7 @@ Ahora una vez que ya tenemos nuestro package.json podemos instalar los paquetes 
 ```bash
 npm install mysql2 sequelize express morgan cors jsonwebtoken bcrypt
 ```
-### `Estructura de Carpetas para una REST API`
+### Estructura de Carpetas para una REST API
 <img src="https://github.com/adrianaadd/ULTIMATE-API-REST-GUIDE/blob/main/images/carpetas.png" width="300">
 
 #### `1. Api`
