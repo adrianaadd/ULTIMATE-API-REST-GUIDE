@@ -68,41 +68,55 @@ Ahora una vez que ya tenemos nuestro package.json podemos instalar los paquetes 
 ```bash
 npm install mysql2 sequelize express morgan cors jsonwebtoken bcrypt
 ```
-### Estructura de carpetas
-<img src="https://github.com/adrianaadd/ULTIMATE-API-REST-GUIDE/blob/main/images/carpetas.png" width="400">
+### Estructura de Carpetas para una REST API
+<img src="https://github.com/adrianaadd/ULTIMATE-API-REST-GUIDE/blob/main/images/carpetas.png" width="300">
 
-6
-Una vez tenemos todo instalado pasamos a crear las carpetas y archivos que vamos a necesitar en nuestro proyecto.
+#### 1. `api`
+Esta carpeta es el núcleo de nuestra aplicación REST API. Dentro de ella, organizamos todo el código relacionado con la lógica  y las operaciones que nuestra API realiza.
 
-En la ruta que estamos creamos dos carpetas, una para toda la estructura de toda nuestra api y otra para todo lo relacionado con nuestra database:
+##### 1.1 `controllers`
+Los controladores son responsables de manejar las peticiones que llegan a la API y devolver las respuestas apropiadas.
 
-```bash
-mkdir api database
-```
+- **Propósito:** Aquí colocamos la lógica de negocio y las acciones que se deben realizar cuando se recibe una solicitud HTTP (GET, POST, PUT, DELETE).
+- **Ejemplo práctico:** Un archivo `userController.js` en esta carpeta manejaría todas las operaciones relacionadas con los usuarios, como crear, leer, actualizar y eliminar usuarios.
 
-```bash
-touch .gitignore
-```
+##### 1.2 `middlewares`
+Los middlewares son funciones que se ejecutan durante el ciclo de vida de una solicitud HTTP, antes de que llegue al controlador.
 
-Ahora creamos nuestro archivo principal y que será la entrada a nuestra API por medio del siguiente comando:
+- **Propósito:** Aquí colocamos la lógica que debe ejecutarse antes o después de las peticiones, como la autenticación, autorización o convertir json a objetos js.
+- **Ejemplo práctico:** Un middleware de autenticación podría verificar si un usuario está autenticado antes de permitirle acceder a ciertas rutas.
 
-```bash
-touch index.js
-```
+##### 1.3 `models`
+Los modelos representan la estructura de las tablas en nuestra base de datos.
 
-Ahora entramos a nuestra carpeta ```api``` con el comando ```cd api``` y creamos tres carpetas con los siguientes nombres por medio de la terminal:
+- **Propósito:** Aquí definimos los esquemas de nuestras tablas,datos y las validaciones de estos.
+- **Ejemplo práctico:** Un archivo `userModel.js` definiría cómo se estructura la tabla usuario en la base de datos, incluyendo atributos como nombre, correo electrónico y contraseña.
 
-```js
-mkdir controllers models routes
-```
+##### 1.4 `routes`
+Las rutas definen los endpoints de nuestra API y mapean las peticiones HTTP a los controladores correspondientes.
 
-Ahora volvemos atrás introduciéndolo en la terminal el comando ```cd ..``` y deberíamos estar otra vez en nuestro directorio (carpeta) principal, si hacemos ls deberíamos ver el package.json como uno de los elementos que están en esa carpeta. Una vez hecho esto entramos en la carpeta database con el comando ```cd database``` y aquí creamos dos archivos con el siguiente comando en terminal:
+- **Propósito:** Aquí especificamos las URL y verbos http que manejará nuestra API ademas asignara el controlador que se encargará de cada una de ellas.
+- **Ejemplo práctico:** Un archivo `userRoutes.js` podría definir rutas como `/users` para obtener con un get todos los usuarios.
 
-```bash
-touch index.js relations.js
-```
+#### 2. `database`
+Esta carpeta contiene la conexión con la base de datos y la sincronizacion y relacion de las tablas definidas en los modelos .
 
-Ahora volvemos hacia la carpeta anterior por medio del comando ```cd ..``` y ya tendríamos la estructura básica de nuestra API creada, es decir, su esqueleto ahora toca darle vida y funcionalidad.
+- **Propósito:** Centralizar toda la lógica y configuración necesaria para interactuar con la base de datos.
+- **Archivos comunes:**
+  - `index.js`: Usualmente contiene la configuración principal de la conexión a la base de datos.
+  - `relations.js`: Define las relaciones entre los modelos de datos, como asociaciones entre tablas en una base de datos relacional.
+
+## 3. `.gitignore`
+Este archivo es fundamental para indicar a Git qué archivos o directorios deben ser ignorados y no subidos al repositorio.
+
+- **Propósito:** Evitar que archivos sensibles, como configuraciones locales o dependencias instaladas, se incluyan en el control de versiones.
+- **Ejemplo práctico:** Incluir `node_modules/` en `.gitignore` evita que se suba la carpeta de dependencias de Node.js al repositorio.
+
+#### 4. `index.js`
+El archivo principal de nuestra aplicación, usualmente ubicado en la raíz del proyecto.
+
+- **Propósito:** Punto de entrada de la aplicación. Aquí inicializamos el servidor, configuramos middlewares globales, definimos la ruta entrada ('/api') y llamamos al index database para conectarnos con la base de datos.
+
 
 ### Iniciar servidor con Express JS
 
