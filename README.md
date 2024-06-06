@@ -28,7 +28,7 @@ Pequeña guía de como debemos afrontar la creación de una API REST para una re
 
 **IMPORTANTE:** tener en cuenta que si nos clonamos el proyecto deberemos directamente entrar a la carpeta de nuestro proyecto una vez se nos clone y ejectar ```npm install``` para que se nos instlen todos los paquetes, es decir, cuando entren a su proyecto el comando anterior lo ejecutan cuando ustedes al ejecutar el comando ```ls``` les muestre el ```package.json```, esa la ruta donde ejecutaremos el comando. 
 
-### Estructura de proyecto
+### Creacion del proyecto e Instalacion de nuestras librerias
 
 Por medio de nuestra terminal accedemos al directorio (carpeta) donde queremos crear el proyecto y por medio del siguiente comando en consola creamos la carpeta donde residirá nuestro proyecto:
 
@@ -47,7 +47,7 @@ npm init -y
 ```
 Este comando nos creará el package.json y al poner ```-y``` damos unos valores por defecto que nos debería mostrar algo como esto por consola:
 
-```js
+```bash
 {
   "name": "sequelize-relations",
   "version": "1.0.0",
@@ -68,10 +68,11 @@ Ahora una vez que ya tenemos nuestro package.json podemos instalar los paquetes 
 ```bash
 npm install mysql2 sequelize express morgan cors jsonwebtoken bcrypt
 ```
+### Estructura de carpetas
 
 Una vez tenemos todo instalado pasamos a crear las carpetas y archivos que vamos a necesitar en nuestro proyecto.
 
-En la ruta que estamos creamos 2 carpetas por medio del siguiente comando en terminal:
+En la ruta que estamos creamos dos carpetas, una para toda la estructura de toda nuestra api y otra llamada database donde almacenaremos tanto nuestra fichero principal como las relaciones de sequelize :
 
 ```bash
 mkdir api database
