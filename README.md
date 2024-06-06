@@ -69,7 +69,7 @@ Ahora una vez que ya tenemos nuestro package.json podemos instalar los paquetes 
 npm install mysql2 sequelize express morgan cors jsonwebtoken bcrypt
 ```
 ### Estructura de carpetas
-<img src="https://github.com/adrianaadd/ULTIMATE-API-REST-GUIDE/images/carpetas.png" width="800">
+<img src="https://github.com/adrianaadd/ULTIMATE-API-REST-GUIDE/blob/main/images/carpetas.png" width="800">
 
 
 Una vez tenemos todo instalado pasamos a crear las carpetas y archivos que vamos a necesitar en nuestro proyecto.
