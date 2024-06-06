@@ -24,7 +24,7 @@ Pequeña guía de como debemos afrontar la creación de una API REST para una re
     - [Middleware de autenticación](#Middleware-de-autenticación)
     - [Verificación de rol](#Verificación-de-rol)
 
-##Inicio de proyecto
+## Inicio de proyecto
 
 **IMPORTANTE:** tener en cuenta que si nos clonamos el proyecto deberemos directamente entrar a la carpeta de nuestro proyecto una vez se nos clone y ejectar ```npm install``` para que se nos instlen todos los paquetes, es decir, cuando entren a su proyecto el comando anterior lo ejecutan cuando ustedes al ejecutar el comando ```ls``` les muestre el ```package.json```, esa la ruta donde ejecutaremos el comando. 
 
