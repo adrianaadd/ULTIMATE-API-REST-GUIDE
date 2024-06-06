@@ -72,7 +72,7 @@ npm install mysql2 sequelize express morgan cors jsonwebtoken bcrypt
 
 Una vez tenemos todo instalado pasamos a crear las carpetas y archivos que vamos a necesitar en nuestro proyecto.
 
-En la ruta que estamos creamos dos carpetas, una para toda la estructura de toda nuestra api y otra llamada database donde almacenaremos tanto nuestra fichero principal como las relaciones de sequelize :
+En la ruta que estamos creamos dos carpetas, una para toda la estructura de toda nuestra api y otra para todo lo relacionado con nuestra database:
 
 ```bash
 mkdir api database
