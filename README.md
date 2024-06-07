@@ -26,7 +26,7 @@ Pequeña guía de como debemos afrontar la creación de una API REST para una re
 
 ## Inicio de proyecto
 
-**IMPORTANTE:** tener en cuenta que si nos clonamos el proyecto deberemos directamente entrar a la carpeta de nuestro proyecto una vez se nos clone y ejectar ```npm install``` para que se nos instlen todos los paquetes, es decir, cuando entren a su proyecto el comando anterior lo ejecutan cuando ustedes al ejecutar el comando ```ls``` les muestre el ```package.json```, esa la ruta donde ejecutaremos el comando. 
+**IMPORTANTE:** Si has clonado el proyecto desde un repositorio, primero debes ingresar a la carpeta del proyecto y ejecutar npm install para instalar todas las dependencias necesarias. Asegúrate de estar en el directorio correcto ejecutando el comando ls y verificando que veas el archivo package.json.
 
 ###  Creacion del proyecto e Instalacion de nuestras librerias
 
@@ -120,9 +120,7 @@ El archivo principal de nuestra aplicación, usualmente ubicado en la raíz del 
 
 ### Iniciar servidor con Express JS
 
-Abrimos VS Code desde la ruta en la que estábamos anteriormente, es decir, en la ruta principal de nuestra aplicación en donde si hacemos ls deberíamos ver el package.json como uno de los elementos que están en esa carpeta, por medio del comando ```code .```.
-
-Una vez que tenemos abierto nuestro editor de texto procedemos a seleccionar el archivo ```index.js``` (**NO EL DE LA CARPETA database**) e iniciamos la escucha de nuestro servidor de la siguente manera:
+Seleccionaremos el archivo principal de nuestra api ```index.js``` (**NO EL DE LA CARPETA database**) e iniciamos la escucha de nuestro servidor de la siguente manera:
 
 - Importamos ```express```, creamos su instancia ```app``` y nos importamos ```cors``` y ```morgan``` añadiendo al archivo:
   ```js
@@ -131,6 +129,9 @@ Una vez que tenemos abierto nuestro editor de texto procedemos a seleccionar el 
   const cors = require('cors')
   const morgan = require('morgan')
   ```
+.express: nos facilitara la creación de aplicaciones web y APIs de forma rápida y sencilla.
+.cors: Middleware para permitir solicitudes de recursos entre diferentes dominios. Es útil para habilitar CORS (Cross-Origin Resource Sharing) y permitir que nuestra API sea accesible desde otros dominios.
+.morgan: Middleware para registrar solicitudes HTTP. Es útil para el desarrollo y depuración, ya que proporciona información en la consola sobre las solicitudes que llegan a nuestro servidor.
 
 - Ahora creamos una función que llamaremos ```initializeAnListenExpress``` en donde crearemos una instacia de express que llamaremos ```app```, aplicaremos los diferentes middlewares como morgan, cors, etc., así como por último la escucha de nuestro servidor en el puerto 3000. Deberíamos tener algo como esto:
   ```js
@@ -161,23 +162,16 @@ Una vez que tenemos abierto nuestro editor de texto procedemos a seleccionar el 
   startApi()
   ```
 
-Aquí por último estamos ejecutando ya ```startAPI```  que nos servirá también para otros procedimientos.
+Aquí por último estamos ejecutando  ```startAPI``` .
 
-Lo que nos queda es arrancar nuestro servidor por medio del comando ```node --watch index.js``` desde nuestra terminal.
+Lo que nos queda es arrancar nuestro servidor por medio del comando ```node --watch index.js``` desde nuestra terminal.Ya tenemos nuestro servidor a la escucha!!!!
 **RECORDATORIO:** ejecutamos desde la ruta principal de nuestra aplicación que es aquella en donde si hacemos ```ls``` deberíamos ver el package.json como uno de los elementos que están en esa carpeta.
 Debería aparecernos por consola algo como esto:
 
-```bash
-node --watch index.js
-Restarting 'index.js'
-Server started
-```
-
-Ya tenemos nuestro servidor a la escucha!!!!
-
 ### Conexión a la base de datos
 
-Para ello primero en el archivo ```index.js``` de la carpeta **database** creamos la conexión a la base de datos, a través de la instacia de ```Sequelize``` que importamos del paquete que ya hemos instalado y deberíamos tener algo como esto:
+Toda esta seccion la trabajaremos en la carpeta database y el primer archivo que modificaremos sera nuestro ```index.js``` 
+En el vamos a crear la conexión a la base de datos, a través de la instacia de ```Sequelize``` que importamos del paquete que ya hemos instalado y deberíamos tener algo como esto:
 
 **IMPORTANTE:** En Table Plus crear la base de datos antes de realizar la conxión a la base de datos.
 
@@ -193,8 +187,7 @@ const connection = new Sequelize('nombreDeLaBasedeDatos', 'usuario', 'contraseñ
   logging: false    // Desactivamos el logging para no mostrar los detalles de las consultas SQL en la consola
 });
 ```
-
-Seguidamente una vez que tenemos la conexión a ka base de datos podemos usar métodos asociados a dicha instacia como el ```authenticate``` para realizar la conexión a la base de datos y autenticación y deberíamos tener algo como esto:
+Con esto hemos creado una plantilla con todos los datos necesarios para realizar nuestra conexión, pero aún no está establecida. Para ello, vamos a crear una pequeña función que ejecute la instancia anterior utilizando el método authenticate:
 
 ```js
 const checkDb = async () => {
@@ -206,8 +199,7 @@ const checkDb = async () => {
   }
 }
 ```
-
-Solo nos queda importar al final de nuestro archivo la función que hemos creado y la instacia de la conexión con nuestra base de datos de la siguiente manera:
+Tenemos la conexión con la base de datos, pero ¿quién debería ejecutar esta función? Lo lógico sería que esta función la ejecutara nuestro archivo principal, index, que actúa como punto de entrada de la aplicación y es el único que será ejecutado. Por lo tanto, vamos a exportar las dos variables que hemos creado:
 
 ```js
 module.exports = {
@@ -216,40 +208,16 @@ module.exports = {
 }
 ```
 
-Y se nos debería quedar una archivo así:
-
-```js
-const { Sequelize } = require('sequelize');
-
-const connection = new Sequelize('nombreDeLaBasedeDatos', 'usuario', 'contraseña', {
-  host: 'localhost', // Dirección del servidor de la base de datos
-  dialect: 'mysql', // Especificamos que usaremos MySQL como el sistema de gestión de base de datos
-  port: 3306,       // Puerto por el que se conecta al servidor MySQL, 3306 es el predeterminado para MySQL
-  logging: false    // Desactivamos el logging para no mostrar los detalles de las consultas SQL en la consola
-});
-
-const checkDb = async () => {
-  try {
-    await connection.authenticate()
-    console.log('Connection to DB succesfull')
-  } catch (error) {
-    console.log(error)
-  }
-}
-
-module.exports = {
-  checkDb,
-  connection
-}
-```
-
-Para finalizar nos quedaría ir a nuestro archivo ```index.js``` principal, nos importamos las funciones que acabamos de crear y creamos una función ```checkAndSyncMySQL``` para realizar nuestra conexión a la base de datos de una manera más unificada (esto de cara a futuro) y deberíamos tener algo así:
+Para finalizar impportamos las variables en nuestro ```index.js``` 
 
 ```js
 const {
   connection,
   checkDb
 } = require('./database/index.js')
+```
+Creamos una funcion que ejecute checkDb
+```js
 
 async function checkAndSyncMySQL() {
     try {
@@ -259,7 +227,8 @@ async function checkAndSyncMySQL() {
     }
 }
 ```
-Ejecutamos esta función en la función ```startAPI``` antes de la inicialización de ```express``` y se nos debería quedar así:
+
+Y a su vez esta función la ejecutamos en la función ```startAPI``` antes de la inicialización de ```express``` y se nos debería quedar así:
 
 ```js
 const startApi = async () => {
@@ -271,8 +240,54 @@ const startApi = async () => {
   }
 }
 ```
+Y si todo va bien deberíamos tener algo como esto en nuestro index principal: 
 
-Y si todo va bien deberíamos tener ya la conexión con la base de datos hecha, simplemente al arrancar el servidor debería mostrarnos esto:
+```js
+const express = require('express')
+const app = express()
+const cors = require('cors')
+const morgan = require('morgan')
+const {
+  connection,
+  checkDb,
+} = require('./database/index.js')
+
+async function checkAndSyncMySQL() {
+  try {
+    await checkDb()
+  } catch (error) {
+    throw error
+  }
+}
+
+const initializeAnListenExpress = () => {
+  try {
+    app.use(express.json())
+      .use(cors())
+      .use(morgan('dev'))
+      .use('/api', require('./api/routes/index'))
+      .listen(3000, () => {
+        console.log('Server started')
+      })
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+const startApi = async () => {
+  try {
+    await checkAndSyncMySQL()
+    initializeAnListenExpress()
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+startApi()
+
+```
+
+La conexión con la base de datos estaria hecha, simplemente al arrancar el servidor debería mostrarnos esto:
 
 ```bash
 node --watch index.js
